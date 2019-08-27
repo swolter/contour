@@ -153,6 +153,28 @@ jobs:
           paths:
             - "*"
 
+  build_x64_osx:
+    macos:
+      xcode: "10.0.0"
+    environment:
+      CMAKE_BUILD_TYPE: "Debug"
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: |
+            brew install cmake
+      - run: *checkout_submodules
+      - run: *run_build
+      - store_artifacts:
+        - build/terminal_test
+        - build/examples/pty_example
+        - build/examples/proxy_term
+      - persist_to_workspace:
+          root: build
+          paths:
+            - "*"
+
   test_x64_ubuntu1904_gcc:
     <<: *test_x64_ubuntu1904
     environment:
@@ -172,5 +194,6 @@ workflows:
       - build_x64_ubuntu1904_gcc_cxx20: *workflow_trigger_on_tags
       - build_x64_ubuntu1904_clang: *workflow_trigger_on_tags
       - build_x64_ubuntu1904_clang_cxx20: *workflow_trigger_on_tags
+      - build_x64_osx: *workflow_trigger_on_tags
       - test_x64_ubuntu1904_gcc: *workflow_x64_ubuntu1904_gcc
       - test_x64_ubuntu1904_clang: *workflow_x64_ubuntu1904_clang
