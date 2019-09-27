@@ -17,7 +17,6 @@ find_package(Threads)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ${MASTER_PROJECT})
 option(CONTOUR_TESTING "Enables building of unittests for libterminal [default: ${MASTER_PROJECT}" ${MASTER_PROJECT})
 option(CONTOUR_EMBEDDED_FMTLIB "Uses embedded fmtlib [default: ${MASTER_PROJECT}" ${MASTER_PROJECT})
-option(CONTOUR_EMBEDDED_YAML_CPP "Uses embedded yaml-cpp [default: ${MASTER_PROJECT}" ${MASTER_PROJECT})
 option(CONTOUR_EMBEDDED_CATCH2 "Uses embedded catch2 for testing [default: ${MASTER_PROJECT}]" ${MASTER_PROJECT})
 option(CONTOUR_EXAMPLES "Enables building of example programs. [default: ${MASTER_PROJECT}]" ${MASTER_PROJECT})
 option(CONTOUR_CLIENT "Enables building of OpenGL terminal view. [default: ${MASTER_PROJECT}]" ${MASTER_PROJECT})
@@ -49,12 +48,6 @@ if(CONTOUR_TESTING AND CONTOUR_EMBEDDED_CATCH2)
     add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/catch2")
 else()
     # master project must provide its own fmtlib
-endif()
-
-if(CONTOUR_EMBEDDED_YAML_CPP)
-	add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/yaml-cpp")
-else()
-	# master project must provide its own fmtlib
 endif()
 
 # ----------------------------------------------------------------------------
